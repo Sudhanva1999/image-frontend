@@ -1,0 +1,5 @@
+.bodyContainer {
+  display: flex;
+  justify-content: center;
+  min-width: 1200px !important;
+}

@@ -1,0 +1,17 @@
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 8vh;
+  background: #000;
+  min-width: 1200px;
+}
+
+.software-title {
+  color: white;
+  font-family: "Share Tech Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+
+}
