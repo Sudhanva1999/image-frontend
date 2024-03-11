@@ -4,37 +4,57 @@ import Sidebar from './components/sidebar/Sidebar';
 import './App.css';
 import ImagePanel from './components/imagepanel/ImagePanel';
 import axios from 'axios';
-import ReactLoading from "react-loading";
 
 const App = () => {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(undefined);
   const [histogramImg, setHistogram] = useState(null);
-  const [currentImgName, setImageName] = useState(null);
-  // const [done, setDone] = useState(true);
+  const [currentImgName, setImageName] = useState(undefined);
 
-  const resizeCanvas = (canvasToResize) => {
-    const parentElement = document.getElementById("img-panel");
-    const parentWidth = parentElement.clientWidth;
-    const parentHeight = parentElement.clientHeight;
-    const aspectRatio = canvasToResize.width / canvasToResize.height;
-    let newWidth, newHeight;
-    if (aspectRatio > 1) {
-        newWidth = parentWidth;
-        newHeight = newWidth / aspectRatio;
-    } else {
-        newHeight = parentHeight;
-        newWidth = newHeight * aspectRatio;
-    }
-    const desiredWidth = newWidth;
-    const desiredHeight = newHeight;
+  const handleDownload = () => {
+    console.log(image);
+    console.log(typeof image);
+        const dataURL = image
+        const link = document.createElement("a");
+        link.href = dataURL;
+        link.download = currentImgName+".png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+  }
 
-    const tempCanvas = document.createElement('canvas');
-    const tempCtx = tempCanvas.getContext('2d');
-    tempCanvas.width = desiredWidth;
-    tempCanvas.height = desiredHeight;
-    tempCtx.drawImage(canvasToResize, 0, 0, desiredWidth, desiredHeight);
-    return tempCanvas;
-  };
+  const resizeImageUrlToCanvas = (imageUrl) => {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "Anonymous"; 
+        img.onload = () => {
+            const parentElement = document.getElementById("img-panel");
+            const parentWidth = parentElement.clientWidth;
+            const parentHeight = parentElement.clientHeight;
+            const aspectRatio = img.width / img.height;
+            let newWidth, newHeight;
+            if (aspectRatio > 1) {
+                newWidth = parentWidth;
+                newHeight = newWidth / aspectRatio;
+            } else {
+                newHeight = parentHeight;
+                newWidth = newHeight * aspectRatio;
+            }
+            const desiredWidth = newWidth;
+            const desiredHeight = newHeight;
+
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = desiredWidth;
+            tempCanvas.height = desiredHeight;
+            tempCtx.drawImage(img, 0, 0, desiredWidth, desiredHeight);
+            resolve(tempCanvas.toDataURL());
+        };
+        img.onerror = (error) => {
+            reject(error);
+        };
+        img.src = imageUrl;
+    });
+};
 
   const resizeImage = (imgToResize) => {
     const canvas = document.createElement('canvas');
@@ -57,50 +77,59 @@ const App = () => {
     return canvas.toDataURL();
   }
 
-  const createImageFromRGBArray = (imageRGBMat) => {
-
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const imageHeight = imageRGBMat.length;
-    const imageWidth = imageRGBMat[0].length;
-    canvas.width = imageWidth;
-    canvas.height = imageHeight;
-      for (let y = 0; y < imageHeight; y++) {
-      for (let x = 0; x < imageWidth; x++) {
-        const [red, green, blue] = imageRGBMat[y][x];
-        const imageData = ctx.createImageData(1, 1);
-        imageData.data[0] = red * 255; 
-        imageData.data[1] = green * 255; 
-        imageData.data[2] = blue * 255; 
-        imageData.data[3] = 255; 
-        ctx.putImageData(imageData, x, y);
-      }
-    }
-  
-    return canvas;
-  };
-
-  const createRGBArray = (imageData, imageWidth, imageHeight) => {
-        const imageRGBMat = [];
-        for (let y = 0; y < imageHeight; y++) {
-          const row = [];
-          for (let x = 0; x < imageWidth; x++) {
-            const index = (y * imageWidth + x) * 4; 
-            const red = imageData[index];
-            const green = imageData[index + 1];
-            const blue = imageData[index + 2];
-            row.push([red / 255, green / 255, blue / 255]);
-          }
-          imageRGBMat.push(row);
+  const handleReset = () => {
+    const getImgData = () => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await axios.get(`http://localhost:8080/getImageById?imageId=${currentImgName}_original`);
+          resolve(response.data); 
+          console.log("Resolved Data");
+        } catch (error) {
+          console.error('Error getting data:', error);
+          reject(error); 
         }
-        return imageRGBMat;
+      });
     };
+    getImgData()
+      .then((data) => {
+        console.log("in then");
+        resizeImageUrlToCanvas(data.base64Image)
+          .then((url) => {
+            console.log("got url ");
+            setImage(url);
+          }
+          );
+        setHistogram(data.histogramMat);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+  }
+
+  const handleSaveOriginal = () => {
+    const postData = () => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await axios.get(`http://localhost:8080/updateOriginal?imageName=${currentImgName}`);
+          resolve(response.data); 
+        } catch (error) {
+          console.error('Error posting data:', error);
+          reject(error); 
+        }
+      });
+    };
+    postData();
+  }
 
     const handleOperation = (operationType) => {
+      if(image == undefined ) {
+        alert("Please upload an Image first !");
+        return;
+      }
       const getImgData = () => {
         return new Promise(async (resolve, reject) => {
           try {
-            // setDone(false);
             const response = await axios.get(`http://localhost:8080/operation${operationType}imageName=${currentImgName}`);
             resolve(response.data); 
           } catch (error) {
@@ -112,42 +141,53 @@ const App = () => {
       
       getImgData()
         .then((data) => {
-          setImage(resizeCanvas(createImageFromRGBArray(data.imageMat)).toDataURL());
-          setHistogram(createImageFromRGBArray(data.histogramMat).toDataURL());
-          // setDone(true);
+          resizeImageUrlToCanvas(data.base64Image)
+            .then((url) => {
+              setImage(url);
+            }
+            );
+          setHistogram(data.histogramMat);
         })
         .catch((error) => {
           console.error('Error:', error);
         });
     } 
 
+    function splitFileNameAndExtension(fileName) {
+      const lastDotIndex = fileName.lastIndexOf('.');
+      if (lastDotIndex !== -1) {
+          const name = fileName.substring(0, lastDotIndex);
+          const extension = fileName.substring(lastDotIndex + 1);
+          return { name, extension };
+      } else {
+          return { name: fileName, extension: '' };
+      }
+  }
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+          const { name, extension } = splitFileNameAndExtension(file.name);
+          
             const reader = new FileReader();
             reader.onload = (event) => {
                 const img = new Image();
                 img.src = event.target.result;
                 img.onload = () => {
                     setImage(resizeImage(img));
-                    setImageName("samplename");
+                    setImageName(name);
                     const arrayCanvas = document.createElement('canvas');
                     const array_ctx = arrayCanvas.getContext('2d');
                     arrayCanvas.width = img.width;
                     arrayCanvas.height = img.height;
                     array_ctx.drawImage(img, 0, 0);
-                    const imageData = array_ctx.getImageData(0, 0, img.width, img.height).data;
-                    const imageWidth = img.width;
-                    const imageHeight = img.height;
-                    const rgbArray = createRGBArray(imageData, imageWidth, imageHeight);
-
                     const postData = () => {
                       return new Promise(async (resolve, reject) => {
                         try {
                           const response = await axios.post('http://localhost:8080/saveImage', {
-                            imageName: "samplename",
-                            imageRGBMat: rgbArray,
-                            extension: "png"
+                            imageName: name,
+                            base64DataUrl: arrayCanvas.toDataURL(),
+                            extension: extension
                           });
                           console.log('Data posted successfully:', response.data);
                           resolve(response.data); 
@@ -157,20 +197,16 @@ const App = () => {
                         }
                       });
                     };
-                    
                     postData()
                       .then((data) => {
                         return axios.get(`http://localhost:8080/getImageHistogram?imageId=${data}`);
                       })
                       .then((response) => {
-                        console.log(response)
-                        setHistogram(createImageFromRGBArray(response.data).toDataURL());
+                        setHistogram(response.data);
                       })
                       .catch((error) => {
                         console.error('Error:', error);
                       });
-
-
                 };
             };
     
@@ -189,6 +225,9 @@ const App = () => {
         <ImagePanel 
           displayImage ={image}
           handleImageChange = {handleImageChange}
+          handleDownload = {handleDownload}
+          handleReset= {handleReset}
+          handleSaveOriginal= {handleSaveOriginal}
         />
       </div>
     </div>

@@ -7,7 +7,9 @@ function Sidebar({displayHistogram, handleOperation}) {
 return (
     <div className="sidebar">
         <Histogram displayHistogram={displayHistogram}/>
-        <Icongrid  handleOperation = {handleOperation}/>
+        <Icongrid  
+        handleOperation = {handleOperation}
+        />
     </div>
   );
 }
