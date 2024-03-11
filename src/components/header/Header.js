@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Header.css";
 
+/**
+ * Header component for the image processing software.
+ * This component displays the software title.
+ * @returns {JSX.Element} Header component JSX
+ */
 function Header() {
-return (
+  return (
     <nav className="nav">
-     <h1 className="software-title">IMAGE PROCESSING SOFTWARE</h1>
+      {/* Displaying the software title */}
+      <h1 className="software-title">IMAGE PROCESSING SOFTWARE</h1>
     </nav>
   );
 }

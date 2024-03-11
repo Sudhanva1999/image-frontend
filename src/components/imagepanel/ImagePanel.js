@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ImagePanel.css";
 import ResetIcon from "../../resources/menubaricons/reset-icon.png"
 import UploadIcon from "../../resources/menubaricons/upload-icon.png"
@@ -7,47 +7,58 @@ import SaveIcon from "../../resources/menubaricons/save-icon.png"
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 
-function ImagePanel({displayImage, handleImageChange, handleDownload, handleReset, handleSaveOriginal}) {
+/**
+ * ImagePanel component for displaying uploaded images and menu bar options.
+ * @param {Object} props - Component props.
+ * @param {string} props.displayImage - URL of the image to display.
+ * @param {Function} props.handleImageChange - Function to handle image upload.
+ * @param {Function} props.handleDownload - Function to handle image download.
+ * @param {Function} props.handleReset - Function to reset the image to its original state.
+ * @param {Function} props.handleSaveOriginal - Function to save the image as original.
+ * @returns {JSX.Element} - JSX for ImagePanel component.
+ */
+function ImagePanel({ displayImage, handleImageChange, handleDownload, handleReset, handleSaveOriginal }) {
     return (
         <div className="image-side">
             <div id="img-panel" className="image-panel">
+                {/* Display uploaded image */}
                 {displayImage && <img src={displayImage} alt="Uploaded" className="display-image" />}
             </div>
+            {/* Menu bar */}
             <div className="menubar">
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Upload Image">
-                <label htmlFor="file-upload" className="menu-icons">
-                   <img className="menu-img" src={UploadIcon} />
-                </label>
+                {/* Upload Image */}
+                <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Upload Image">
+                    <label htmlFor="file-upload" className="menu-icons">
+                        <img className="menu-img" src={UploadIcon} alt="Upload Icon" />
+                    </label>
                 </Tooltip>
-                <input className="menu-input" onChange={(e) => handleImageChange(e)}  id="file-upload" type="file" />
+                <input className="menu-input" onChange={(e) => handleImageChange(e)} id="file-upload" type="file" />
 
+                {/* Download Image */}
                 <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Download Image">
-                <label htmlFor="file-download" className="menu-icons">
-                   <img className="menu-img" src={DownloadIcon} />
-                </label>
-              
+                    <label htmlFor="file-download" className="menu-icons">
+                        <img className="menu-img" src={DownloadIcon} alt="Download Icon" />
+                    </label>
                 </Tooltip>
-                <input className="menu-input" onClick={() => handleDownload()}  id="file-download" />
+                <input className="menu-input" onClick={() => handleDownload()} id="file-download" />
 
+                {/* Reset to original */}
                 <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Reset to original">
-                <label htmlFor="file-reset" className="menu-icons">
-                   <img className="menu-img" src={ResetIcon} />
-                </label>
-              
+                    <label htmlFor="file-reset" className="menu-icons">
+                        <img className="menu-img" src={ResetIcon} alt="Reset Icon" />
+                    </label>
                 </Tooltip>
-                <input className="menu-input" onClick={() => handleReset()}  id="file-reset"  />
+                <input className="menu-input" onClick={() => handleReset()} id="file-reset" />
 
-
+                {/* Save as original */}
                 <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Save as original">
-                <label htmlFor="file-save-original" className="menu-icons">
-                   <img className="menu-img" src={SaveIcon} />
-                </label>
-               
+                    <label htmlFor="file-save-original" className="menu-icons">
+                        <img className="menu-img" src={SaveIcon} alt="Save Icon" />
+                    </label>
                 </Tooltip>
-                <input className="menu-input" onClick={() => handleSaveOriginal()}   id="file-save-original" />
+                <input className="menu-input" onClick={() => handleSaveOriginal()} id="file-save-original" />
             </div>
         </div>
-
     );
 }
 

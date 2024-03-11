@@ -31,6 +31,12 @@ import ColorCorrectIcon from "../../resources/commandIcons/color-correct-icon.pn
 import CompressIcon from "../../resources/commandIcons/compress-icon.png";
 import { Button } from "@mui/base";
 
+/**
+ * CustomPopup component for displaying a customizable popup.
+ * @param {Object} props - Component props.
+ * @param {Function} props.onClose - Function to close the popup.
+ * @returns {JSX.Element} - JSX for CustomPopup component.
+ */
 function CustomPopup({ children, onClose }) {
     return (
         <div className="custom-popup-overlay">
@@ -46,7 +52,13 @@ function CustomPopup({ children, onClose }) {
     );
 }
 
-function Icongrid({ handleOperation}) {
+/**
+ * Icongrid component for displaying a grid of icons representing various image operations.
+ * @param {Object} props - Component props.
+ * @param {Function} props.handleOperation - Function to handle image operation.
+ * @returns {JSX.Element} - JSX for Icongrid component.
+ */
+function Icongrid({ handleOperation }) {
     const [openBright, setOpenBright] = useState(false);
     const [openDark, setOpenDark] = useState(false);
     const [openCompress, setOpenCompress] = useState(false);
@@ -58,6 +70,10 @@ function Icongrid({ handleOperation}) {
     const [levelsValMid, setLevelsValMid] = useState(undefined);
     const [levelsValWhite, setLevelsValWhite] = useState(undefined);
 
+     /**
+     * Opens the specified popup.
+     * @param {string} operation - Operation type.
+     */
     const openPopup = (operation) => {
         switch (operation) {
             case 'bright':
@@ -77,6 +93,10 @@ function Icongrid({ handleOperation}) {
         }
     };
 
+    /**
+     * Closes the specified popup.
+     * @param {string} operation - Operation type.
+     */
     const closePopup = (operation) => {
         switch (operation) {
             case 'bright':
@@ -96,6 +116,10 @@ function Icongrid({ handleOperation}) {
         }
     };
 
+    /**
+     * Handles input for the specified operation.
+     * @param {string} operation - Operation type.
+     */
     const handleOperationInput = (operation) => {
         switch (operation) {
             case 'bright':
@@ -111,7 +135,7 @@ function Icongrid({ handleOperation}) {
                 setOpenCompress(false)
                 break;
             case 'levels':
-                if(!(levelsValBlack < levelsValMid) || !(levelsValMid < levelsValWhite)) {
+                if (!(levelsValBlack < levelsValMid) || !(levelsValMid < levelsValWhite)) {
                     alert("The levels must be in asecending order ! ");
                     break;
                 }
@@ -121,7 +145,7 @@ function Icongrid({ handleOperation}) {
             default:
                 break;
         }
-        
+
     }
 
     return (
