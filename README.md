@@ -8,13 +8,8 @@ To run this application locally, follow these steps:
 
 1. Clone this repository.
 2. Navigate to the project directory.
-3. Install dependencies using npm:
-
-`npm install`
-
-4. Start the development server:
-`npm start`
-
+3. Install dependencies using npm: `npm install`
+4. Start the development server: `npm start`
 
 ## Usage
 
@@ -70,8 +65,6 @@ To apply an operation to an image, click on the corresponding icon in the grid. 
 
 - The application provides a visual representation of each operation using icons for better user experience.
 - Users can preview the effect of each operation before applying it to the image.
-
-
 
 ## Technologies Used
 
