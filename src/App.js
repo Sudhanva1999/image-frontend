@@ -216,6 +216,10 @@ const App = () => {
           const postData = () => {
             return new Promise(async (resolve, reject) => {
               try {
+                fetch("3.145.35.203:5000/getImageById?imageId=hello12", requestOptions)
+                  .then((response) => response.text())
+                  .then((result) => console.log(result))
+                  .catch((error) => console.error(error));
                 const response = await axios.post(`${API_BASE_URL}${API_ENDPOINTS.saveImage}`, {
                   imageName: name,
                   base64DataUrl: arrayCanvas.toDataURL(),
