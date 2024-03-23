@@ -24,7 +24,7 @@
 
 .menubar {
     margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 5px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -58,3 +58,22 @@
     font-family: "Share Tech Mono", monospace;
     font-size: 40px;
 }
+
+
+.button-icon-menu {
+    height: 50px;
+    width: 50px;
+    border: none;
+    outline: none;
+    background-color: #bfd9fc;
+    border-radius: 15px;
+    transition: all ease 0.1s;
+    box-shadow: 0px 5px 0px 0px #7b97c5;
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  .button-icon-menu:active {
+    transform: translateY(5px);
+    box-shadow: 0px 0px 0px 0px #a29bfe;
+  }

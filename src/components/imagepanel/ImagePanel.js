@@ -32,7 +32,7 @@ function ImagePanel({ displayImage, handleImageChange, handleDownload, handleRes
             <div className="menubar">
                 {/* Upload Image */}
                 <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Upload Image">
-                    <label htmlFor="file-upload" className="menu-icons">
+                    <label htmlFor="file-upload" className="button-icon-menu">
                         <img className="menu-img" src={UploadIcon} alt="Upload Icon" />
                     </label>
                 </Tooltip>
@@ -40,7 +40,7 @@ function ImagePanel({ displayImage, handleImageChange, handleDownload, handleRes
 
                 {/* Download Image */}
                 <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Download Image">
-                    <label htmlFor="file-download" className="menu-icons">
+                    <label htmlFor="file-download" className="button-icon-menu">
                         <img className="menu-img" src={DownloadIcon} alt="Download Icon" />
                     </label>
                 </Tooltip>
@@ -48,7 +48,7 @@ function ImagePanel({ displayImage, handleImageChange, handleDownload, handleRes
 
                 {/* Reset to original */}
                 <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Reset to original">
-                    <label htmlFor="file-reset" className="menu-icons">
+                    <label htmlFor="file-reset" className="button-icon-menu">
                         <img className="menu-img" src={ResetIcon} alt="Reset Icon" />
                     </label>
                 </Tooltip>
@@ -56,7 +56,7 @@ function ImagePanel({ displayImage, handleImageChange, handleDownload, handleRes
 
                 {/* Save as original */}
                 <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Save as original">
-                    <label htmlFor="file-save-original" className="menu-icons">
+                    <label htmlFor="file-save-original" className="button-icon-menu">
                         <img className="menu-img" src={SaveIcon} alt="Save Icon" />
                     </label>
                 </Tooltip>
