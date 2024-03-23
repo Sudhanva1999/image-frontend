@@ -70,10 +70,10 @@ function Icongrid({ handleOperation }) {
     const [levelsValMid, setLevelsValMid] = useState(undefined);
     const [levelsValWhite, setLevelsValWhite] = useState(undefined);
 
-     /**
-     * Opens the specified popup.
-     * @param {string} operation - Operation type.
-     */
+    /**
+    * Opens the specified popup.
+    * @param {string} operation - Operation type.
+    */
     const openPopup = (operation) => {
         switch (operation) {
             case 'bright':
@@ -254,91 +254,108 @@ function Icongrid({ handleOperation }) {
                 </CustomPopup>
             )}
 
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Generate Red Component">
-                <div className="command-icon" onClick={() => handleOperation("/component/color?color=red&")}>
-                    <img className="icon" src={RedIcon} />
-                </div>
-            </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Generate Green Component">
-                <div className="command-icon" onClick={() => handleOperation("/component/color?color=green&")}>
-                    <img className="icon" src={GreenIcon} />
-                </div>
-            </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Generate Blue Component">
-                <div className="command-icon" onClick={() => handleOperation("/component/color?color=blue&")}>
-                    <img className="icon" src={BlueIcon} />
-                </div>
-            </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Sharpen Image">
 
-                <div className="command-icon" onClick={() => handleOperation("/sharpen?")}>
-                    <img className="icon" src={SharpenIcon} />
-                </div>
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Extract the red channel from image RGB data.">
+                <button className="button-icon" onClick={() => handleOperation("/component/color?color=red&")}>
+                    <img className="icon" src={RedIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Blur Image">
-                <div className="command-icon" onClick={() => handleOperation("/blur?")}>
-                    <img className="icon" src={BlurIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Extract the green channel from image RGB data.">
+                <button className="button-icon" onClick={() => handleOperation("/component/color?color=green&")}>
+                        <img className="icon" src={GreenIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Darken Image">
-                <div className="command-icon" onClick={() => openPopup("dark")} >
-                    <img className="icon" src={DarkenIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Extract the blue channel from image RGB data.">
+                <button className="button-icon" onClick={() =>  handleOperation("/component/color?color=blue&")}>
+                        <img className="icon" src={BlueIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Brighten Image">
-                <div className="command-icon" onClick={() => openPopup("bright")} >
-                    <img className="icon" src={BrightenIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Sharpen the image.">
+            <button className="button-icon" onClick={() =>  handleOperation("/sharpen?")}>
+                        <img className="icon" src={SharpenIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Luma Component Image">
-                <div className="command-icon" onClick={() => handleOperation("/component/ilv?ilv=luma&")}>
-                    <img className="icon" src={LumaIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Blur the image.">
+                <button className="button-icon" onClick={() =>  handleOperation("/blur?")}>
+                        <img className="icon" src={BlurIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Value Component Image">
-                <div className="command-icon" onClick={() => handleOperation("/component/ilv?ilv=value&")}>
-                    <img className="icon" src={ValueIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Darken the image.">
+            <button className="button-icon" onClick={() => openPopup("dark")}>
+                        <img className="icon" src={DarkenIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Intensity Component Image">
-                <div className="command-icon" onClick={() => handleOperation("/component/ilv?ilv=intensity&")}>
-                    <img className="icon" src={IntensityIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Brighten the image.">
+                <button className="button-icon" onClick={() => openPopup("bright")}>
+                        <img className="icon" src={BrightenIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Greyscale Filter">
-                <div className="command-icon" onClick={() => handleOperation("/filter/greyscale?")}>
-                    <img className="icon" src={GreyscaleIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Extract the luma component of the image.">
+                <button className="button-icon" onClick={() => handleOperation("/component/ilv?ilv=luma&")}>
+                        <img className="icon" src={LumaIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Sepia Filter">
-                <div className="command-icon" onClick={() => handleOperation("/filter/sepia?")}>
-                    <img className="icon" src={SepiaIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Extract the value component of the image.">
+                <button className="button-icon" onClick={() => handleOperation("/component/ilv?ilv=value&")}>
+                        <img className="icon" src={ValueIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Color Correct Image">
-                <div className="command-icon" onClick={() => handleOperation("/color-correct?")}>
-                    <img className="icon" src={ColorCorrectIcon} />
-                </div>
+
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Extract the intensity component of the image.">
+                <button className="button-icon" onClick={() => handleOperation("/component/ilv?ilv=intensity&")}>
+                        <img className="icon" src={IntensityIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Compress Image">
-                <div className="command-icon" onClick={() => openPopup("compress")}>
-                    <img className="icon" src={CompressIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Apply greyscale filter to the image.">
+            <button className="button-icon" onClick={() => handleOperation("/filter/greyscale?")}>
+                        <img className="icon" src={GreyscaleIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Adjust Levels">
-                <div className="command-icon" onClick={() => openPopup("levels")}>
-                    <img className="icon" src={LevelsIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Apply sepia filter to the image.">
+                <button className="button-icon" onClick={() => handleOperation("/filter/sepia?")}>
+                        <img className="icon" src={SepiaIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Flip Verticaly">
-                <div className="command-icon" onClick={() => handleOperation("/flip?axis=x&")}>
-                    <img className="icon" src={VerticalIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Color Correct the image">
+                <button className="button-icon" onClick={() => handleOperation("/color-correct?")}>
+                        <img className="icon" src={ColorCorrectIcon} />
+                </button>
             </Tooltip>
-            <Tooltip TransitionComponent={Zoom} enterDelay={600} title="Flip Horizontaly">
-                <div className="command-icon" onClick={() => handleOperation("/flip?axis=y&")}>
-                    <img className="icon" src={HorizontalIcon} />
-                </div>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Compress the image.">
+                <button className="button-icon" onClick={() => openPopup("compress")}>
+                        <img className="icon" src={CompressIcon} />
+                </button>
+            </Tooltip>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Adjust black, mid and white levels of the image.">
+                <button className="button-icon" onClick={() => openPopup("levels")}>
+                        <img className="icon" src={LevelsIcon} />
+                </button>
+            </Tooltip>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Flip the image Verticaly.">
+                <button className="button-icon" onClick={() => handleOperation("/flip?axis=x&")}>
+                        <img className="icon" src={VerticalIcon} />
+                </button>
+            </Tooltip>
+
+            <Tooltip TransitionComponent={Zoom} enterDelay={100} title="Flip the image Horizontaly.">
+                <button className="button-icon" onClick={() => handleOperation("/flip?axis=y&")}>
+                        <img className="icon" src={HorizontalIcon} />
+                </button>
             </Tooltip>
         </div>
     );

@@ -10,7 +10,7 @@ function Header() {
   return (
     <nav className="nav">
       {/* Displaying the software title */}
-      <h1 className="software-title">IMAGE PROCESSING SOFTWARE</h1>
+      <h1 className="software-title">Pixel Manipulator</h1>
     </nav>
   );
 }

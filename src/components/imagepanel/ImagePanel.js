@@ -22,7 +22,11 @@ function ImagePanel({ displayImage, handleImageChange, handleDownload, handleRes
         <div className="image-side">
             <div id="img-panel" className="image-panel">
                 {/* Display uploaded image */}
-                {displayImage && <img src={displayImage} alt="Uploaded" className="display-image" />}
+                {displayImage ? (
+                    <img src={displayImage} alt="Uploaded" className="display-image" />
+                ) : (
+                    <p className="altText">Load an image to get started &#x2192;</p>
+                )}
             </div>
             {/* Menu bar */}
             <div className="menubar">

@@ -53,3 +53,8 @@
     height: 50px;
     width: 50px;
 }
+.altText {
+    color: white;
+    font-family: "Share Tech Mono", monospace;
+    font-size: 40px;
+}

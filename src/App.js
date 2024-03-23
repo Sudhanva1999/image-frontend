@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/header/Header';
 import Sidebar from './components/sidebar/Sidebar';
 import './App.css';
@@ -14,6 +14,24 @@ const App = () => {
   const [image, setImage] = useState(undefined);
   const [histogramImg, setHistogram] = useState(null);
   const [currentImgName, setImageName] = useState(undefined);
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    // Check if the popup has been shown before
+    const popupShownBefore = localStorage.getItem('popupShown');
+
+    // If not shown before or page is refreshed, show the popup
+    if (!popupShownBefore || window.performance && window.performance.navigation.type === 1) {
+      setShowPopup(true);
+
+      // Store flag indicating the popup has been shown
+      localStorage.setItem('popupShown', 'true');
+    }
+  }, []);
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
 
   /**
    * Function to handle image download
@@ -249,6 +267,26 @@ const App = () => {
   return (
     <div className="App">
       <Header />
+      <div className={`popup ${showPopup ? 'show' : ''}`}>
+        <div className="popup-content">
+          <div className='containerIntroPop'>
+          <p className='starterText'>Hey!</p>
+          <p className='introText'>I am <strong>Sudhanva</strong> , a Full stack developer and cloud enthusiast based in Boston, MA.
+            I have created this app using java RESTfull apis using spring boot in the backend and ReactJS for the frontend. It performs several basic image manipulation operations.
+            Upload an image and get exploring !
+          </p>
+
+          </div>
+         
+          <button onClick={handleClosePopup} class="pushable">
+            <span class="shadow"></span>
+            <span class="edge"></span>
+            <span class="front">
+             Explore the App !
+            </span>
+          </button>
+        </div>
+      </div>
       <div className='bodyContainer'>
         <Sidebar
           displayHistogram={histogramImg}
