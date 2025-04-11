@@ -8,6 +8,7 @@ import { API_BASE_URL, API_ENDPOINTS } from './ApiConfig';
 
 /**
  * Main application component
+ * Demo Comment
  */
 const App = () => {
   // State variables
